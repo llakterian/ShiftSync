@@ -83,7 +83,7 @@ async function seed() {
   
   console.log('Applying triggers for real-time SSE...');
   const triggersSql = fs.readFileSync(path.join(__dirname, '../lib/db/triggers.sql'), 'utf-8');
-  await sqlClient.execute(sql.raw(triggersSql));
+  await db.execute(sql.raw(triggersSql));
   
   console.log('Seed and triggers complete!');
   process.exit(0);
