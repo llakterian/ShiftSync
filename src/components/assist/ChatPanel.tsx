@@ -2,18 +2,20 @@
 import React from 'react';
 import { useChat } from '@ai-sdk/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send, MessageCircle, User } from 'lucide-react';
 
 export function ChatPanel() {
-  const { messages, input = '', handleInputChange, handleSubmit, isLoading } = useChat();
+  const { messages, handleSubmit, isLoading, append } = useChat();
+  const [localInput, setLocalInput] = React.useState('');
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!(input || '').trim()) return;
-    handleSubmit(e);
+    const trimmed = localInput.trim();
+    if (!trimmed) return;
+    append({ role: 'user', content: trimmed });
+    setLocalInput('');
   };
 
   return (
@@ -27,9 +29,10 @@ export function ChatPanel() {
         <ScrollArea className="flex-1 p-4">
           <div className="space-y-4 pb-4">
             {messages.length === 0 && (
-              <div className="hidden">
-                <p>Hello! I can help you find shift coverage or check overtime risks.</p>
-                <p className="text-sm mt-2">Try asking: "Who can cover a bartender shift tonight?"</p>
+              <div className="text-center py-12 text-slate-400">
+                <MessageCircle className="mx-auto h-10 w-10 mb-3 opacity-50" />
+                <p className="font-medium text-slate-600">How can I help?</p>
+                <p className="text-sm mt-1">Try asking: &quot;Who can cover a bartender shift tonight?&quot;</p>
               </div>
             )}
             {messages.map((m) => (
@@ -40,7 +43,6 @@ export function ChatPanel() {
                   </div>
                   <div className={`px-4 py-2 rounded-lg ${m.role === 'user' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-800'}`}>
                     <p className="text-sm whitespace-pre-wrap">{m.content}</p>
-                    {/* Render tool invocations gracefully */}
                     {m.toolInvocations?.map((t: any) => (
                       <div key={t.toolCallId} className="mt-2 text-xs bg-white/50 p-2 rounded border border-slate-200 text-slate-600">
                         {t.state === 'call' ? `Calling database: ${t.toolName}...` : `Database result retrieved.`}
@@ -61,13 +63,14 @@ export function ChatPanel() {
         </ScrollArea>
         <div className="p-4 border-t">
           <form onSubmit={onSubmit} className="flex gap-2">
-            <Input
-              value={input || ''}
-              onChange={handleInputChange}
+            <input
+              type="text"
+              value={localInput}
+              onChange={(e) => setLocalInput(e.target.value)}
               placeholder="Ask a scheduling question..."
-              className="flex-1"
+              className="flex-1 h-9 rounded-md border border-slate-300 bg-white px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
             />
-            <Button type="submit" disabled={isLoading || !(input || '').trim()}>
+            <Button type="submit" disabled={isLoading || !localInput.trim()}>
               <Send className="h-4 w-4" />
             </Button>
           </form>
