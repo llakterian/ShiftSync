@@ -7,14 +7,14 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send, MessageCircle, User } from 'lucide-react';
 
 export function ChatPanel() {
-  const { messages, handleSubmit, isLoading, append } = useChat();
+  const { messages, handleSubmit, isLoading, sendMessage } = useChat();
   const [localInput, setLocalInput] = React.useState('');
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmed = localInput.trim();
     if (!trimmed) return;
-    append({ role: 'user', content: trimmed });
+    sendMessage({ text: trimmed });
     setLocalInput('');
   };
 
