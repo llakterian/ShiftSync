@@ -1,3 +1,6 @@
+import { config } from 'dotenv';
+config({ path: '.env.local' });
+
 import { db } from '../lib/db/client';
 import * as schema from '../lib/db/schema';
 import { eq } from 'drizzle-orm';
