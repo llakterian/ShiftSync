@@ -16,8 +16,8 @@ export default async function StaffSwapsPage() {
           <CardContent className="p-4 flex items-center justify-between">
             <div>
               <p className="font-medium">Saturday, Sep 19 (18:00 - 02:00)</p>
-              <p className="text-sm text-slate-500">Downtown • Bartender</p>
-              <p className="text-xs text-amber-600 mt-1">Dropped by: Mike T.</p>
+              <p className="text-sm text-muted-foreground">Downtown • Bartender</p>
+              <p className="text-xs text-warning mt-1">Dropped by: Mike T.</p>
             </div>
             <Button>Claim Shift</Button>
           </CardContent>
@@ -30,12 +30,12 @@ export default async function StaffSwapsPage() {
           <CardContent className="p-4 flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <Badge variant="outline" className="bg-yellow-50 text-yellow-700">Pending Approval</Badge>
+                <Badge variant="outline" className="bg-warning/10 text-warning">Pending Approval</Badge>
                 <span className="font-medium">Swap Request</span>
               </div>
               <p className="text-sm mt-2">You requested to swap Friday 17:00 with Sarah&rsquo;s Saturday 10:00.</p>
             </div>
-            <Button variant="outline" className="text-red-600 hover:text-red-700 hover:bg-red-50">Cancel</Button>
+            <Button variant="outline" className="text-destructive hover:bg-destructive/10">Cancel</Button>
           </CardContent>
         </Card>
       </div>

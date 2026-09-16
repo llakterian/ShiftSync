@@ -4,48 +4,66 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    /* Coastal Eats — light: warm sand shore, deep-ocean ink, sea-teal brand */
+    --background: 40 33% 97%;
+    --foreground: 210 45% 14%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 210 45% 14%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --radius: 0.5rem;
+    --popover-foreground: 210 45% 14%;
+    --primary: 197 85% 27%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 42 45% 87%;
+    --secondary-foreground: 210 45% 14%;
+    --muted: 40 25% 92%;
+    --muted-foreground: 213 20% 44%;
+    --accent: 185 55% 91%;
+    --accent-foreground: 197 85% 20%;
+    --destructive: 4 78% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 40 18% 84%;
+    --input: 40 18% 84%;
+    --ring: 197 85% 27%;
+    --radius: 0.75rem;
+
+    /* Coastal status colors */
+    --success: 160 70% 32%;
+    --success-foreground: 0 0% 100%;
+    --warning: 32 95% 34%;
+    --warning-foreground: 40 33% 97%;
+
+    /* Gradient start for page headers (ocean horizon) */
+    --ocean-start: 196 60% 90%;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    /* Coastal Eats — dark: ocean night */
+    --background: 212 48% 7%;
+    --foreground: 190 25% 92%;
+    --card: 212 42% 10%;
+    --card-foreground: 190 25% 92%;
+    --popover: 212 42% 10%;
+    --popover-foreground: 190 25% 92%;
+    --primary: 187 80% 45%;
+    --primary-foreground: 212 48% 7%;
+    --secondary: 213 30% 16%;
+    --secondary-foreground: 190 25% 92%;
+    --muted: 213 30% 15%;
+    --muted-foreground: 213 15% 62%;
+    --accent: 195 45% 18%;
+    --accent-foreground: 187 60% 80%;
+    --destructive: 4 80% 58%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 213 28% 18%;
+    --input: 213 28% 18%;
+    --ring: 187 80% 45%;
+
+    --success: 160 65% 42%;
+    --success-foreground: 0 0% 100%;
+    --warning: 40 90% 55%;
+    --warning-foreground: 212 48% 7%;
+
+    --ocean-start: 210 55% 14%;
   }
 
   * {
@@ -59,5 +77,13 @@
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  /* Soft ocean-horizon wash used at the top of pages */
+  .ocean-hero {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--ocean-start)) 0%,
+      hsl(var(--background)) 320px
+    );
   }
 }

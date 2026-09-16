@@ -18,7 +18,7 @@ export function ScheduleActions() {
       <div className="flex items-center space-x-2">
         <Button variant="outline" onClick={handlePublish} disabled={isPublished}>
           {isPublished ? (
-            <><Check className="mr-2 h-4 w-4 text-emerald-500" /> Published</>
+            <><Check className="mr-2 h-4 w-4 text-success" /> Published</>
           ) : (
             'Publish Week'
           )}

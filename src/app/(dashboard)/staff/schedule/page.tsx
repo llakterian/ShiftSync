@@ -16,11 +16,11 @@ export default async function StaffSchedulePage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-lg flex justify-between items-center">
               <span>Friday, Sep 18</span>
-              <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full font-medium">Confirmed</span>
+              <span className="text-xs bg-success/10 text-success px-2 py-1 rounded-full font-medium">Confirmed</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 text-sm text-slate-600 mt-2">
+            <div className="space-y-2 text-sm text-muted-foreground mt-2">
               <div className="flex items-center">
                 <Clock className="w-4 h-4 mr-2" /> 17:00 - 23:00 (6h)
               </div>
@@ -28,7 +28,7 @@ export default async function StaffSchedulePage() {
                 <MapPin className="w-4 h-4 mr-2" /> Downtown
               </div>
               <div className="flex items-center">
-                <span className="w-4 h-4 mr-2 font-bold bg-slate-100 flex items-center justify-center rounded-sm">B</span> Bartender
+                <span className="w-4 h-4 mr-2 font-bold bg-muted flex items-center justify-center rounded-sm">B</span> Bartender
               </div>
             </div>
             <div className="mt-4 pt-4 border-t flex justify-end gap-2">

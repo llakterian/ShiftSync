@@ -33,10 +33,10 @@ export function FairnessReport() {
                 <TableCell>{staff.premiumShifts}</TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
-                    <span className={`font-bold ${staff.fairnessScore < 75 ? 'text-red-500' : 'text-emerald-500'}`}>
+                    <span className={`font-bold ${staff.fairnessScore < 75 ? 'text-destructive' : 'text-success'}`}>
                       {staff.fairnessScore}%
                     </span>
-                    {staff.fairnessScore < 75 && <span className="text-xs text-red-500">(Under-represented)</span>}
+                    {staff.fairnessScore < 75 && <span className="text-xs text-destructive">(Under-represented)</span>}
                   </div>
                 </TableCell>
               </TableRow>

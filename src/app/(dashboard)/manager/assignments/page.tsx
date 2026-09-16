@@ -55,7 +55,7 @@ export default async function AssignmentsPage() {
                   <TableRow key={staff.id}>
                     <TableCell className="font-medium">
                       <div>{staff.name}</div>
-                      <div className="text-xs text-slate-500 font-normal">{staff.email}</div>
+                      <div className="text-xs text-muted-foreground font-normal">{staff.email}</div>
                     </TableCell>
                     <TableCell>
                       <Badge variant={staff.role === 'admin' ? 'destructive' : staff.role === 'manager' ? 'default' : 'secondary'} className="capitalize">
@@ -69,7 +69,7 @@ export default async function AssignmentsPage() {
                             <Badge key={loc.id} variant="outline" className="text-xs">{loc.name}</Badge>
                           ))
                         ) : (
-                          <span className="text-xs text-slate-400">None</span>
+                          <span className="text-xs text-muted-foreground">None</span>
                         )}
                       </div>
                     </TableCell>
@@ -80,11 +80,11 @@ export default async function AssignmentsPage() {
                             <Badge key={skill.id} variant="secondary" className="text-xs capitalize">{skill.name}</Badge>
                           ))
                         ) : (
-                          <span className="text-xs text-slate-400">None</span>
+                          <span className="text-xs text-muted-foreground">None</span>
                         )}
                       </div>
                     </TableCell>
-                    <TableCell className="text-sm text-slate-500">
+                    <TableCell className="text-sm text-muted-foreground">
                       {staff.timezonePref}
                     </TableCell>
                   </TableRow>

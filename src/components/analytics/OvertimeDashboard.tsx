@@ -22,22 +22,22 @@ export function OvertimeDashboard() {
               <span className="font-medium text-sm">{staff.name}</span>
               <span className="text-sm font-semibold">{staff.scheduled}h / {staff.max}h</span>
             </div>
-            
+
             {/* Progress Bar */}
-            <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-              <div 
-                className={`h-full ${staff.risk === 'critical' ? 'bg-red-500' : staff.risk === 'high' ? 'bg-amber-500' : 'bg-emerald-500'}`} 
+            <div className="w-full bg-muted h-2 rounded-full overflow-hidden">
+              <div
+                className={`h-full ${staff.risk === 'critical' ? 'bg-destructive' : staff.risk === 'high' ? 'bg-warning' : 'bg-success'}`}
                 style={{ width: `${Math.min(100, (staff.scheduled / staff.max) * 100)}%` }}
               />
             </div>
-            
+
             {staff.risk === 'critical' && (
-              <div className="flex items-center text-xs text-red-600 mt-1">
+              <div className="flex items-center text-xs text-destructive mt-1">
                 <AlertTriangle className="h-3 w-3 mr-1" /> Exceeds 40h overtime limit
               </div>
             )}
             {staff.risk === 'high' && (
-              <div className="flex items-center text-xs text-amber-600 mt-1">
+              <div className="flex items-center text-xs text-warning mt-1">
                 <AlertTriangle className="h-3 w-3 mr-1" /> Approaching overtime threshold
               </div>
             )}

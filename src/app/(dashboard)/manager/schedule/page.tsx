@@ -14,7 +14,7 @@ export default async function ManagerSchedulePage() {
         <ScheduleActions />
       </div>
       
-      <div className="flex-1 min-h-[500px] border rounded-lg bg-white overflow-hidden">
+      <div className="flex-1 min-h-[500px] border rounded-lg bg-card overflow-hidden">
         <WeekGrid />
       </div>
     </div>

@@ -25,26 +25,26 @@ export function ChatPanel() {
     <Card className="w-full max-w-2xl h-[600px] flex flex-col">
       <CardHeader className="border-b pb-4">
         <CardTitle className="text-lg flex items-center">
-          <MessageCircle className="mr-2 h-5 w-5 text-blue-600" /> Assistant
+          <MessageCircle className="mr-2 h-5 w-5 text-primary" /> Assistant
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-1 overflow-hidden flex flex-col p-0">
         <ScrollArea className="flex-1 p-4">
           <div className="space-y-4 pb-4">
             {messages.length === 0 && !error && (
-              <div className="text-center py-12 text-slate-400">
+              <div className="text-center py-12 text-muted-foreground/70">
                 <MessageCircle className="mx-auto h-10 w-10 mb-3 opacity-50" />
-                <p className="font-medium text-slate-600">How can I help?</p>
+                <p className="font-medium text-muted-foreground">How can I help?</p>
                 <p className="text-sm mt-1">Try asking: &quot;Who can cover a bartender shift tonight?&quot;</p>
               </div>
             )}
             {messages.map((m) => (
               <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`flex gap-2 max-w-[80%] ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
-                  <div className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 ${m.role === 'user' ? 'bg-blue-100 text-blue-600' : 'bg-slate-100 text-slate-600'}`}>
+                  <div className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 ${m.role === 'user' ? 'bg-accent text-accent-foreground' : 'bg-muted text-muted-foreground'}`}>
                     {m.role === 'user' ? <User className="h-4 w-4" /> : <MessageCircle className="h-4 w-4" />}
                   </div>
-                  <div className={`px-4 py-2 rounded-lg ${m.role === 'user' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-800'}`}>
+                  <div className={`px-4 py-2 rounded-lg ${m.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground'}`}>
                     {m.parts.map((part, i) => {
                       if (part.type === 'text') {
                         return <p key={i} className="text-sm whitespace-pre-wrap">{part.text}</p>;
@@ -52,7 +52,7 @@ export function ChatPanel() {
                       if (part.type.startsWith('tool-')) {
                         const toolPart = part as { toolName: string; state: string };
                         return (
-                          <div key={i} className="mt-2 text-xs bg-white/50 p-2 rounded border border-slate-200 text-slate-600">
+                          <div key={i} className="mt-2 text-xs bg-background/60 p-2 rounded border border-border text-muted-foreground">
                             {toolPart.state === 'output-available'
                               ? `Database result retrieved (${toolPart.toolName}).`
                               : `Calling database: ${toolPart.toolName}...`}
@@ -67,13 +67,13 @@ export function ChatPanel() {
             ))}
             {isBusy && (
               <div className="flex justify-start">
-                <div className="bg-slate-100 px-4 py-2 rounded-lg text-sm text-slate-500 animate-pulse">
+                <div className="bg-muted px-4 py-2 rounded-lg text-sm text-muted-foreground animate-pulse">
                   Thinking...
                 </div>
               </div>
             )}
             {error && (
-              <div className="text-center text-sm text-red-500">
+              <div className="text-center text-sm text-destructive">
                 Something went wrong. Check the server logs and try again.
               </div>
             )}
@@ -86,7 +86,7 @@ export function ChatPanel() {
               value={localInput}
               onChange={(e) => setLocalInput(e.target.value)}
               placeholder="Ask a scheduling question..."
-              className="flex-1 h-9 rounded-md border border-slate-300 bg-white px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+              className="flex-1 h-9 rounded-md border border-input bg-card px-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
             <Button type="submit" disabled={isBusy || !localInput.trim()}>
               <Send className="h-4 w-4" />
