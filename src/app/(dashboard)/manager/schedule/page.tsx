@@ -1,7 +1,6 @@
 import React from 'react';
 import { WeekGrid } from '@/components/schedule/WeekGrid';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { ScheduleActions } from '@/components/schedule/ScheduleActions';
 
 export default async function ManagerSchedulePage() {
   return (
@@ -13,12 +12,7 @@ export default async function ManagerSchedulePage() {
             Manage shifts and assignments for your locations.
           </p>
         </div>
-        <div className="flex items-center space-x-2">
-          <Button variant="outline">Publish Week</Button>
-          <Button>
-            <Plus className="mr-2 h-4 w-4" /> Add Shift
-          </Button>
-        </div>
+        <ScheduleActions />
       </div>
       
       <div className="flex-1 min-h-[500px] border rounded-lg bg-white overflow-hidden">

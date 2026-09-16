@@ -1,4 +1,5 @@
 'use client';
+import React from 'react';
 import { useChat } from '@ai-sdk/react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,7 +8,15 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send, Bot, User } from 'lucide-react';
 
 export function ChatPanel() {
-  const { messages, input = '', handleInputChange, handleSubmit, isLoading } = useChat();
+  const { messages, input = '', setInput, handleSubmit, isLoading } = useChat();
+  const [localInput, setLocalInput] = React.useState('');
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setInput(localInput);
+    handleSubmit(e);
+    setLocalInput('');
+  };
 
   return (
     <Card className="w-full max-w-2xl h-[600px] flex flex-col">
@@ -53,14 +62,14 @@ export function ChatPanel() {
           </div>
         </ScrollArea>
         <div className="p-4 border-t">
-          <form onSubmit={handleSubmit} className="flex gap-2">
+          <form onSubmit={onSubmit} className="flex gap-2">
             <Input
-              value={input}
-              onChange={handleInputChange}
+              value={localInput}
+              onChange={(e) => setLocalInput(e.target.value)}
               placeholder="Ask a scheduling question..."
               className="flex-1"
             />
-            <Button type="submit" disabled={isLoading || !input.trim()}>
+            <Button type="submit" disabled={isLoading || !localInput.trim()}>
               <Send className="h-4 w-4" />
             </Button>
           </form>

@@ -1,9 +1,20 @@
 import Link from 'next/link';
-import { Calendar, Users, BarChart3, Settings, LogOut, MessageSquare } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Calendar, Users, BarChart3, LogOut, MessageSquare } from 'lucide-react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { cookies } from 'next/headers';
+import { logout } from '@/app/actions';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const role = cookies().get('mock_role')?.value || 'manager';
+  
+  const personaMap: Record<string, { name: string, initial: string, color: string }> = {
+    admin: { name: 'System Admin', initial: 'A', color: 'bg-red-100 text-red-600' },
+    manager: { name: 'East Manager', initial: 'M', color: 'bg-blue-100 text-blue-600' },
+    staff: { name: 'John Doe', initial: 'J', color: 'bg-slate-100 text-slate-600' }
+  };
+  
+  const persona = personaMap[role] || personaMap.manager;
   return (
     <div className="flex min-h-screen flex-col md:flex-row bg-slate-50">
       {/* Sidebar */}
@@ -16,21 +27,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
         
         <nav className="flex-1 py-6 px-4 space-y-1">
-          <Link href="/manager/schedule">
-            <Button variant="ghost" className="w-full justify-start text-slate-600 hover:text-slate-900 hover:bg-slate-100">
-              <Calendar className="mr-3 h-5 w-5" /> Schedule
-            </Button>
-          </Link>
-          <Link href="/manager/assignments">
-            <Button variant="ghost" className="w-full justify-start text-slate-600 hover:text-slate-900 hover:bg-slate-100">
-              <Users className="mr-3 h-5 w-5" /> Assignments
-            </Button>
-          </Link>
-          <Link href="/manager/analytics">
-            <Button variant="ghost" className="w-full justify-start text-slate-600 hover:text-slate-900 hover:bg-slate-100">
-              <BarChart3 className="mr-3 h-5 w-5" /> Analytics
-            </Button>
-          </Link>
+          {role !== 'staff' && (
+            <Link href="/manager/schedule">
+              <Button variant="ghost" className="w-full justify-start text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                <Calendar className="mr-3 h-5 w-5" /> Schedule
+              </Button>
+            </Link>
+          )}
+          {role !== 'staff' && (
+            <Link href="/manager/assignments">
+              <Button variant="ghost" className="w-full justify-start text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                <Users className="mr-3 h-5 w-5" /> Assignments
+              </Button>
+            </Link>
+          )}
+          {(role === 'admin' || role === 'manager') && (
+            <Link href="/manager/analytics">
+              <Button variant="ghost" className="w-full justify-start text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+                <BarChart3 className="mr-3 h-5 w-5" /> Analytics
+              </Button>
+            </Link>
+          )}
           <Link href="/manager/assist">
             <Button variant="ghost" className="w-full justify-start text-slate-600 hover:text-slate-900 hover:bg-slate-100">
               <MessageSquare className="mr-3 h-5 w-5" /> Smart Assist
@@ -41,17 +58,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="p-4 border-t">
           <div className="flex items-center gap-3 px-2 py-2">
             <Avatar>
-              <AvatarImage src="" />
-              <AvatarFallback>M</AvatarFallback>
+              <AvatarFallback className={persona.color}>{persona.initial}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <span className="text-sm font-medium">East Manager</span>
-              <span className="text-xs text-slate-500">manager</span>
+              <span className="text-sm font-medium">{persona.name}</span>
+              <span className="text-xs text-slate-500 capitalize">{role}</span>
             </div>
           </div>
-          <Button variant="ghost" className="w-full justify-start mt-2 text-slate-500 hover:text-red-600 hover:bg-red-50">
-            <LogOut className="mr-3 h-5 w-5" /> Sign Out
-          </Button>
+          <form action={logout}>
+            <Button type="submit" variant="ghost" className="w-full justify-start mt-2 text-slate-500 hover:text-red-600 hover:bg-red-50">
+              <LogOut className="mr-3 h-5 w-5" /> Sign Out
+            </Button>
+          </form>
         </div>
       </aside>
 
