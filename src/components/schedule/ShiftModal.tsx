@@ -6,7 +6,20 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-export function ShiftModal({ isOpen, onClose, onSave }: any) {
+interface ShiftModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSave?: (formData: {
+    locationId: string;
+    requiredSkillId: string;
+    date: string;
+    startTime: string;
+    endTime: string;
+    headcountNeeded: number;
+  }) => void;
+}
+
+export function ShiftModal({ isOpen, onClose, onSave }: ShiftModalProps) {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     locationId: '',
@@ -21,6 +34,7 @@ export function ShiftModal({ isOpen, onClose, onSave }: any) {
     e.preventDefault();
     setLoading(true);
     // API call to /api/shifts
+    onSave?.(formData);
     setLoading(false);
     onClose();
   };

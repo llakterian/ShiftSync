@@ -1,4 +1,3 @@
-import React from 'react';
 import { WeekGrid } from '@/components/schedule/WeekGrid';
 import { ScheduleActions } from '@/components/schedule/ScheduleActions';
 

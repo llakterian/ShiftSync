@@ -7,13 +7,16 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send, MessageCircle, User } from 'lucide-react';
 
 export function ChatPanel() {
-  const { messages, handleSubmit, isLoading, sendMessage } = useChat();
+  const { messages, sendMessage, status, error } = useChat({
+    onError: (err) => console.error('chat error:', err),
+  });
   const [localInput, setLocalInput] = React.useState('');
+  const isBusy = status === 'submitted' || status === 'streaming';
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmed = localInput.trim();
-    if (!trimmed) return;
+    if (!trimmed || isBusy) return;
     sendMessage({ text: trimmed });
     setLocalInput('');
   };
@@ -28,7 +31,7 @@ export function ChatPanel() {
       <CardContent className="flex-1 overflow-hidden flex flex-col p-0">
         <ScrollArea className="flex-1 p-4">
           <div className="space-y-4 pb-4">
-            {messages.length === 0 && (
+            {messages.length === 0 && !error && (
               <div className="text-center py-12 text-slate-400">
                 <MessageCircle className="mx-auto h-10 w-10 mb-3 opacity-50" />
                 <p className="font-medium text-slate-600">How can I help?</p>
@@ -42,21 +45,36 @@ export function ChatPanel() {
                     {m.role === 'user' ? <User className="h-4 w-4" /> : <MessageCircle className="h-4 w-4" />}
                   </div>
                   <div className={`px-4 py-2 rounded-lg ${m.role === 'user' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-800'}`}>
-                    <p className="text-sm whitespace-pre-wrap">{m.content}</p>
-                    {m.toolInvocations?.map((t: any) => (
-                      <div key={t.toolCallId} className="mt-2 text-xs bg-white/50 p-2 rounded border border-slate-200 text-slate-600">
-                        {t.state === 'call' ? `Calling database: ${t.toolName}...` : `Database result retrieved.`}
-                      </div>
-                    ))}
+                    {m.parts.map((part, i) => {
+                      if (part.type === 'text') {
+                        return <p key={i} className="text-sm whitespace-pre-wrap">{part.text}</p>;
+                      }
+                      if (part.type.startsWith('tool-')) {
+                        const toolPart = part as { toolName: string; state: string };
+                        return (
+                          <div key={i} className="mt-2 text-xs bg-white/50 p-2 rounded border border-slate-200 text-slate-600">
+                            {toolPart.state === 'output-available'
+                              ? `Database result retrieved (${toolPart.toolName}).`
+                              : `Calling database: ${toolPart.toolName}...`}
+                          </div>
+                        );
+                      }
+                      return null;
+                    })}
                   </div>
                 </div>
               </div>
             ))}
-            {isLoading && (
+            {isBusy && (
               <div className="flex justify-start">
                 <div className="bg-slate-100 px-4 py-2 rounded-lg text-sm text-slate-500 animate-pulse">
                   Thinking...
                 </div>
+              </div>
+            )}
+            {error && (
+              <div className="text-center text-sm text-red-500">
+                Something went wrong. Check the server logs and try again.
               </div>
             )}
           </div>
@@ -70,7 +88,7 @@ export function ChatPanel() {
               placeholder="Ask a scheduling question..."
               className="flex-1 h-9 rounded-md border border-slate-300 bg-white px-3 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
             />
-            <Button type="submit" disabled={isLoading || !localInput.trim()}>
+            <Button type="submit" disabled={isBusy || !localInput.trim()}>
               <Send className="h-4 w-4" />
             </Button>
           </form>

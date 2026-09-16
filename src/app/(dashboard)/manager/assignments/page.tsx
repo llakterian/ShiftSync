@@ -1,4 +1,3 @@
-import React from 'react';
 import { db } from '@/lib/db/client';
 import * as schema from '@/lib/db/schema';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';

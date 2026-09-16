@@ -46,6 +46,7 @@ async function seed() {
     .values(locationsData)
     .onConflictDoNothing()
     .returning();
+  console.log(`Locations inserted: ${insertedLocations.length}`);
   
   const allLocations = await db.select().from(schema.locations);
   console.log(`Locations total: ${allLocations.length}`);

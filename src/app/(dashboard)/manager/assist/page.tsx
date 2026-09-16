@@ -1,4 +1,3 @@
-import React from 'react';
 import { ChatPanel } from '@/components/assist/ChatPanel';
 
 export default async function ManagerAssistPage() {

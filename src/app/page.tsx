@@ -1,4 +1,3 @@
-import React from 'react';
 import { loginAs } from './actions';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';

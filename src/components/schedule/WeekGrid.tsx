@@ -1,4 +1,3 @@
-import React from 'react';
 import { format, addDays, startOfWeek } from 'date-fns';
 
 export function WeekGrid() {

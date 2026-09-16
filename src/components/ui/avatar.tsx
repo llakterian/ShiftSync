@@ -45,8 +45,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
 )
 Avatar.displayName = "Avatar"
 
-export interface AvatarImageProps
-  extends React.ImgHTMLAttributes<HTMLImageElement> {}
+export type AvatarImageProps = React.ImgHTMLAttributes<HTMLImageElement>
 
 const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
   ({ className, onLoad, onError, ...props }, ref) => {
@@ -75,8 +74,7 @@ const AvatarImage = React.forwardRef<HTMLImageElement, AvatarImageProps>(
 )
 AvatarImage.displayName = "AvatarImage"
 
-export interface AvatarFallbackProps
-  extends React.HTMLAttributes<HTMLSpanElement> {}
+export type AvatarFallbackProps = React.HTMLAttributes<HTMLSpanElement>
 
 const AvatarFallback = React.forwardRef<HTMLSpanElement, AvatarFallbackProps>(
   ({ className, ...props }, ref) => {
@@ -100,8 +98,7 @@ const AvatarFallback = React.forwardRef<HTMLSpanElement, AvatarFallbackProps>(
 )
 AvatarFallback.displayName = "AvatarFallback"
 
-export interface AvatarBadgeProps
-  extends React.HTMLAttributes<HTMLSpanElement> {}
+export type AvatarBadgeProps = React.HTMLAttributes<HTMLSpanElement>
 
 const AvatarBadge = React.forwardRef<HTMLSpanElement, AvatarBadgeProps>(
   ({ className, ...props }, ref) => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -34,7 +33,7 @@ export default async function StaffSwapsPage() {
                 <Badge variant="outline" className="bg-yellow-50 text-yellow-700">Pending Approval</Badge>
                 <span className="font-medium">Swap Request</span>
               </div>
-              <p className="text-sm mt-2">You requested to swap Friday 17:00 with Sarah's Saturday 10:00.</p>
+              <p className="text-sm mt-2">You requested to swap Friday 17:00 with Sarah&rsquo;s Saturday 10:00.</p>
             </div>
             <Button variant="outline" className="text-red-600 hover:text-red-700 hover:bg-red-50">Cancel</Button>
           </CardContent>

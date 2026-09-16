@@ -1,8 +1,8 @@
 import { db } from '../db/client';
 import * as schema from '../db/schema';
-import { eq, and, or, not, gt, lt, lte, gte, between, sql } from 'drizzle-orm';
+import { eq, and, or, not, gt, lt, lte, gte, sql } from 'drizzle-orm';
 import { ConstraintResult, ShiftData } from './types';
-import { differenceInHours, addDays, startOfWeek, endOfWeek, differenceInMinutes, startOfDay, endOfDay, getDay, format } from 'date-fns';
+import { startOfWeek, endOfWeek, differenceInMinutes, startOfDay, endOfDay, getDay, format } from 'date-fns';
 
 /* 1. Double Booking: No overlapping shifts */
 export async function checkDoubleBooking(userId: string, shift: ShiftData): Promise<ConstraintResult> {
