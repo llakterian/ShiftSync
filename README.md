@@ -51,7 +51,7 @@ The Coastal Eats Shift Manager is a web-based scheduling platform that handles w
 ### 1. Clone and install
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/llakterian/coastal_eats.git
 cd int
 npm install
 ```
