@@ -8,11 +8,11 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send, MessageCircle, User } from 'lucide-react';
 
 export function ChatPanel() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat();
+  const { messages, input = '', handleInputChange, handleSubmit, isLoading } = useChat();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!(input || '').trim()) return;
     handleSubmit(e);
   };
 
@@ -67,7 +67,7 @@ export function ChatPanel() {
               placeholder="Ask a scheduling question..."
               className="flex-1"
             />
-            <Button type="submit" disabled={isLoading || !input.trim()}>
+            <Button type="submit" disabled={isLoading || !(input || '').trim()}>
               <Send className="h-4 w-4" />
             </Button>
           </form>
