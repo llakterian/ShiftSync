@@ -62,7 +62,7 @@ export function ChatPanel() {
         <div className="p-4 border-t">
           <form onSubmit={onSubmit} className="flex gap-2">
             <Input
-              value={input}
+              value={input || ''}
               onChange={handleInputChange}
               placeholder="Ask a scheduling question..."
               className="flex-1"
