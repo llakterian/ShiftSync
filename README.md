@@ -45,8 +45,7 @@ The Coastal Eats Shift Manager is a web-based scheduling platform that handles w
 
 - Node.js 18 or higher
 - npm 9 or higher
-- Docker Desktop (for the local Postgres database)
-- A Supabase account (for production) OR Docker (for local dev)
+- A [Supabase](https://supabase.com) account (for the PostgreSQL database)
 
 ### 1. Clone and install
 
@@ -68,13 +67,6 @@ Open `.env.local` and fill in:
 |---|---|
 | `DATABASE_URL` | Supabase dashboard > Settings > Database > Connection string. Use the **Transaction** mode URL (port 6543). |
 | `OPENAI_API_KEY` | https://platform.openai.com/api-keys |
-
-For **local development only**, you can use the bundled Docker Postgres instead:
-
-```bash
-docker-compose up -d
-# Then set DATABASE_URL=postgresql://root:password@localhost:5432/shiftsync
-```
 
 ### 3. Run database migrations and seed
 
