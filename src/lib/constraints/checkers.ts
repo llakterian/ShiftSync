@@ -11,7 +11,10 @@ export async function checkDoubleBooking(userId: string, shift: ShiftData): Prom
     .where(
       and(
         eq(schema.shiftAssignments.userId, userId),
-        eq(schema.shiftAssignments.status, 'confirmed'),
+        or(
+          eq(schema.shiftAssignments.status, 'confirmed'),
+          eq(schema.shiftAssignments.status, 'assigned')
+        ),
         lt(schema.shifts.startAt, shift.endAt),
         gt(schema.shifts.endAt, shift.startAt),
         not(eq(schema.shifts.id, shift.id))
@@ -39,7 +42,10 @@ export async function checkMinRestPeriod(userId: string, shift: ShiftData): Prom
     .where(
       and(
         eq(schema.shiftAssignments.userId, userId),
-        eq(schema.shiftAssignments.status, 'confirmed'),
+        or(
+          eq(schema.shiftAssignments.status, 'confirmed'),
+          eq(schema.shiftAssignments.status, 'assigned')
+        ),
         or(
           and(gte(schema.shifts.endAt, bufferStart), lte(schema.shifts.endAt, shift.startAt)),
           and(gte(schema.shifts.startAt, shift.endAt), lte(schema.shifts.startAt, bufferEnd))

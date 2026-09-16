@@ -1,7 +1,7 @@
-# ShiftSync - Multi-Location Staff Scheduling Platform
+# Coastal Eats Shift Manager
 
 ## Overview
-ShiftSync is a robust scheduling platform designed to handle complex workforce constraints across multiple locations and timezones.
+Coastal Eats Shift Manager is a robust scheduling platform designed to handle complex workforce constraints across multiple locations and timezones.
 
 ## Key Features & Evaluation Criteria
 1. **Constraint Enforcement Engine:** A strict validation engine checking double-bookings, 10h rest periods, location certifications, skill matches, daily/weekly hours (overtime), and consecutive days worked.

@@ -8,8 +8,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="flex min-h-screen flex-col md:flex-row bg-slate-50">
       {/* Sidebar */}
       <aside className="w-full md:w-64 bg-white border-r flex-shrink-0 flex flex-col">
-        <div className="h-16 flex items-center px-6 border-b font-bold text-xl tracking-tight text-blue-600">
-          Coastal Eats
+        <div className="h-16 flex items-center px-6 border-b">
+          <div>
+            <div className="font-bold text-lg tracking-tight text-blue-700">Coastal Eats</div>
+            <div className="text-xs text-slate-400 tracking-wide">Shift Manager</div>
+          </div>
         </div>
         
         <nav className="flex-1 py-6 px-4 space-y-1">

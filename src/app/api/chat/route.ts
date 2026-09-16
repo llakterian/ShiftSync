@@ -9,11 +9,11 @@ export async function POST(req: Request) {
 
   const result = await streamText({
     model: openai('gpt-4-turbo'),
-    system: `You are the ShiftSync Smart Assist AI. 
-    You help restaurant managers efficiently schedule staff, find coverage for call-outs, 
-    and avoid overtime violations.
+    system: `You are the Coastal Eats Shift Manager Smart Assist.
+    You help Coastal Eats restaurant managers efficiently schedule staff, find coverage for call-outs,
+    and avoid overtime violations across all four locations.
     Always use the provided tools to fetch real data before answering.
-    If you don't know the location ID, ask the user to clarify which location they are asking about.`,
+    If you do not know the location ID, ask the user to clarify which location they are asking about.`,
     messages,
     tools: {
       getAvailableStaff: getAvailableStaffTool,
