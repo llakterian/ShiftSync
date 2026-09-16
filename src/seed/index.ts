@@ -1,9 +1,16 @@
 import { config } from 'dotenv';
 config({ path: '.env.local' });
 
-import { db } from '../lib/db/client';
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
 import * as schema from '../lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
+import fs from 'fs';
+import path from 'path';
+
+const connectionString = process.env.DATABASE_URL!;
+const sqlClient = postgres(connectionString, { max: 1 });
+const db = drizzle(sqlClient, { schema });
 
 async function seed() {
   console.log('Seeding database...');
@@ -75,11 +82,7 @@ async function seed() {
   ]);
   
   console.log('Applying triggers for real-time SSE...');
-  const fs = require('fs');
-  const path = require('path');
   const triggersSql = fs.readFileSync(path.join(__dirname, '../lib/db/triggers.sql'), 'utf-8');
-  const sqlClient = require('../lib/db/client').db;
-  const { sql } = require('drizzle-orm');
   await sqlClient.execute(sql.raw(triggersSql));
   
   console.log('Seed and triggers complete!');
