@@ -7,7 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Send, Bot, User } from 'lucide-react';
 
 export function ChatPanel() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat();
+  const { messages, input = '', handleInputChange, handleSubmit, isLoading } = useChat();
 
   return (
     <Card className="w-full max-w-2xl h-[600px] flex flex-col">
