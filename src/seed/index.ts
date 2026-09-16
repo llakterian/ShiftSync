@@ -71,7 +71,15 @@ async function seed() {
     { userId: staffUsers[2].id, skillId: insertedSkills[0].id }, // Maria is also bartender
   ]);
   
-  console.log('Seed complete!');
+  console.log('Applying triggers for real-time SSE...');
+  const fs = require('fs');
+  const path = require('path');
+  const triggersSql = fs.readFileSync(path.join(__dirname, '../lib/db/triggers.sql'), 'utf-8');
+  const sqlClient = require('../lib/db/client').db;
+  const { sql } = require('drizzle-orm');
+  await sqlClient.execute(sql.raw(triggersSql));
+  
+  console.log('Seed and triggers complete!');
   process.exit(0);
 }
 
