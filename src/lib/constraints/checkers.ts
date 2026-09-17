@@ -204,20 +204,21 @@ export async function checkDailyHours(userId: string, shift: ShiftData): Promise
   return { ok: true };
 }
 
-/* 7. Weekly Hours (35h warn, 40h block) */
+/* 7. Weekly Hours: warn at 35h, warn again at 40h (spec: 40 is a warning threshold,
+ * never a hard block; overtime cost visibility is the manager's call) */
 export async function checkWeeklyHours(userId: string, shift: ShiftData): Promise<ConstraintResult> {
   const weekStart = startOfWeek(shift.startAt, { weekStartsOn: 1 }); // Monday start
   const weekEnd = endOfWeek(shift.startAt, { weekStartsOn: 1 });
   const existingHours = await getHoursForPeriod(userId, weekStart, weekEnd, shift.id);
   const newHours = differenceInMinutes(shift.endAt, shift.startAt) / 60;
-  
+
   const total = existingHours + newHours;
-  
-  if (total > 40) {
-    return { ok: false, rule: 'weekly_hours', severity: 'block', message: `Weekly hours would exceed 40 (${total.toFixed(1)}h). Overtime not permitted without override.` };
-  }
+
   if (total >= 35) {
-    return { ok: false, rule: 'weekly_hours', severity: 'warn', message: `Approaching overtime (${total.toFixed(1)}h).` };
+    const over = total > 40
+      ? `Weekly hours would exceed 40 (${total.toFixed(1)}h). Overtime cost impact: confirm only if intentional.`
+      : `Approaching overtime (${total.toFixed(1)}h of 40h).`;
+    return { ok: false, rule: 'weekly_hours', severity: 'warn', message: over };
   }
   return { ok: true };
 }
@@ -247,9 +248,16 @@ export async function checkConsecutiveDays(userId: string, shift: ShiftData): Pr
   
   daysWorked.add(getDay(shift.startAt)); // add new shift day
   const totalDays = daysWorked.size;
-  
+
+  /* 7th day: allowed but requires a documented override reason (spec §4);
+   * the UI collects the reason and it lands in the audit trail */
   if (totalDays >= 7) {
-    return { ok: false, rule: 'consecutive_days', severity: 'block', message: 'Scheduling for a 7th consecutive day requires manager override.' };
+    return {
+      ok: false,
+      rule: 'consecutive_days',
+      severity: 'override',
+      message: 'Scheduling for a 7th consecutive day requires a documented manager override reason.',
+    };
   }
   if (totalDays === 6) {
     return { ok: false, rule: 'consecutive_days', severity: 'warn', message: 'Scheduling for 6 days this week.' };

@@ -15,8 +15,10 @@ export async function evaluateAssignment(userId: string, shift: ShiftData, withS
   ]);
 
   const failures = results.filter(r => !r.ok);
-  
-  /* If there are blocking failures and suggestions are requested, find alternative staff */
+
+  /* If there are blocking failures and suggestions are requested, find alternative staff.
+   * 'override' severity (7th consecutive day) is NOT a block: it needs a documented reason,
+   * which the confirm step collects and writes to the audit trail. */
   if (withSuggestions && failures.some(f => !f.ok && f.severity === 'block')) {
     const suggestions = await getCoverageSuggestions(shift);
     // Attach suggestions to the first blocking failure

@@ -44,3 +44,9 @@ DROP TRIGGER IF EXISTS swap_requests_notify_trigger ON swap_requests;
 CREATE TRIGGER swap_requests_notify_trigger
 AFTER INSERT OR UPDATE OR DELETE ON swap_requests
 FOR EACH ROW EXECUTE FUNCTION notify_table_update();
+
+-- Apply to notifications (drives in-app notification center updates)
+DROP TRIGGER IF EXISTS notifications_notify_trigger ON notifications;
+CREATE TRIGGER notifications_notify_trigger
+AFTER INSERT OR UPDATE OR DELETE ON notifications
+FOR EACH ROW EXECUTE FUNCTION notify_table_update();

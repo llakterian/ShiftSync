@@ -1,27 +1,46 @@
 import { NextRequest } from 'next/server';
-import postgres from 'postgres';
+import { makeListenClient } from '@/lib/db/options';
 
-export const runtime = 'nodejs'; // Use Node.js runtime instead of Edge to maintain the persistent PG connection
+export const runtime = 'nodejs'; // persistent PG connection requires Node runtime
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
+  const encoder = new TextEncoder();
+
   const stream = new ReadableStream({
     async start(controller) {
-      // Connect specifically for listening (don't use the app's standard connection pool)
-      const sql = postgres(process.env.DATABASE_URL!, {
-        max: 1, // We only need 1 connection for the listener
-        idle_timeout: 0, // Never close
-      });
+      let closed = false;
+      let heartbeat: ReturnType<typeof setInterval> | null = null;
+      const sql = makeListenClient();
 
-      // Listen to the PG notification channel
-      await sql.listen('db_changes', (payload) => {
-        const data = `data: ${payload}\n\n`;
-        controller.enqueue(new TextEncoder().encode(data));
-      });
+      const safeEnqueue = (data: string) => {
+        if (closed) return;
+        try {
+          controller.enqueue(encoder.encode(data));
+        } catch {
+          closed = true;
+        }
+      };
+
+      /* Comment heartbeat every 25s: keeps proxies from killing the stream
+         and lets the client detect dead connections. */
+      heartbeat = setInterval(() => safeEnqueue(`: heartbeat\n\n`), 25_000);
+
+      try {
+        await sql.listen('db_changes', (payload) => {
+          safeEnqueue(`data: ${payload}\n\n`);
+        });
+        safeEnqueue(`: connected\n\n`);
+      } catch (err) {
+        console.error('SSE listen failed:', err);
+        safeEnqueue(`event: error\ndata: {"error":"listen failed"}\n\n`);
+      }
 
       // Cleanup when client disconnects
       req.signal.addEventListener('abort', () => {
-        sql.end();
+        closed = true;
+        if (heartbeat) clearInterval(heartbeat);
+        sql.end({ timeout: 5 }).catch(() => {});
       });
     },
   });
@@ -31,6 +50,7 @@ export async function GET(req: NextRequest) {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache, no-transform',
       'Connection': 'keep-alive',
+      'X-Accel-Buffering': 'no',
     },
   });
 }

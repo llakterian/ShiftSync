@@ -32,13 +32,19 @@ export async function POST(req: NextRequest) {
     /* Run the constraint engine */
     const results = await evaluateAssignment(userId, shiftData, true);
 
+    /* 'override' (7th consecutive day) is allowed with a documented reason:
+     * it behaves like a warning for the assign/deny decision, and the reason
+     * the caller passes is written to the audit trail on confirm. */
+    const { overrideReason } = body as { overrideReason?: string };
     const isBlocked = results.some((r) => !r.ok && r.severity === 'block');
+    const needsOverride = results.some((r) => !r.ok && r.severity === 'override');
     const isWarning = results.some((r) => !r.ok && r.severity === 'warn');
 
     return NextResponse.json({
       success: !isBlocked,
       results,
-      status: isBlocked ? 'blocked' : isWarning ? 'warning' : 'ok',
+      status: isBlocked ? 'blocked' : needsOverride ? 'override_required' : isWarning ? 'warning' : 'ok',
+      overrideReasonRequired: needsOverride && !overrideReason,
     });
   } catch (error) {
     console.error('Error checking assignment constraints:', error);

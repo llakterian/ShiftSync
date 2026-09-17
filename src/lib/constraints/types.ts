@@ -9,7 +9,7 @@ export type ConstraintResult =
   | {
       ok: false;
       rule: string;
-      severity: 'block' | 'warn';
+      severity: 'block' | 'warn' | 'override';
       message: string;
       suggestions?: StaffSuggestion[];
     };
