@@ -105,13 +105,13 @@ export function WeekGrid() {
           return (
             <div key={i} className="border-r last:border-r-0 p-2 bg-background min-h-[200px] align-top">
               {loading && dayShifts.length === 0 ? (
-                <div className="text-xs text-muted-foreground text-center mt-4 animate-pulse">Loading\u2026</div>
+                <div className="text-xs text-muted-foreground text-center mt-4 animate-pulse">Loading...</div>
               ) : dayShifts.length === 0 ? (
-                <div className="text-sm text-muted-foreground text-center mt-4">\u2014</div>
+                <div className="text-sm text-muted-foreground text-center mt-4">—</div>
               ) : (
                 <div className="space-y-2">
                   {dayShifts.map((s) => (
-                    <div key={s.id} className="rounded-md border bg-card p-2 text-xs shadow-sm cursor-pointer hover:bg-accent/50 transition-colors" title={`${s.locationName} \u00b7 ${s.skillName}`} onClick={() => setSelectedShift(s)}>
+                    <div key={s.id} className="rounded-md border bg-card p-2 text-xs shadow-sm cursor-pointer hover:bg-accent/50 transition-colors" title={`${s.locationName} · ${s.skillName}`} onClick={() => setSelectedShift(s)}>
                       <div className="flex items-center justify-between gap-1">
                         <span className="font-semibold text-foreground truncate">{formatInTimeZone(parseISO(s.startAt), s.locationTz, "HH:mm")} - {formatInTimeZone(parseISO(s.endAt), s.locationTz, "HH:mm")}</span>
                         <Badge variant={s.status === "published" ? "default" : "secondary"} className="text-[10px] px-1.5 py-0">{s.status}</Badge>
@@ -130,7 +130,7 @@ export function WeekGrid() {
         })}
       </div>
 
-      {error && <div className="border-t px-4 py-2 text-xs text-destructive flex-shrink-0" role="alert">{error} \u2014 showing last known data</div>}
+      {error && <div className="border-t px-4 py-2 text-xs text-destructive flex-shrink-0" role="alert">{error} — showing last known data</div>}
 
       <AssignmentModal shift={selectedShift} onClose={() => setSelectedShift(null)} onAssigned={() => setSelectedShift(null)} />
     </div>
