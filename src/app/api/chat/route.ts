@@ -10,10 +10,9 @@ const nvidia = createOpenAI({
   apiKey: process.env.NVIDIA_API_KEY ?? 'missing',
 });
 
-/* NVIDIA NIM (hosted) is the Smart Assist backend. DeepSeek V4 Flash responds
- * reliably with tool calls; latency is ~15-50s per model leg, so the UI keeps
- * the user informed while tools run. */
-const MODEL_ID = 'deepseek-ai/deepseek-v4-flash-0731';
+/* NVIDIA NIM (hosted) is the Smart Assist backend. z-ai/glm-5.3-flash responds
+ * reliably with tool calls within Vercel Hobby 60s limit. */
+const MODEL_ID = 'z-ai/glm-5.3-flash';
 
 export async function POST(req: Request) {
   const { messages } = await req.json();
