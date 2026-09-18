@@ -1,6 +1,6 @@
 # Coastal Eats Shift Manager
 
-> Live demo: **DEPLOYMENT_URL** (set after `vercel deploy`; see Deployment below)
+> Live demo: **[DEPLOYMENT_URL](https://shiftsync-psi-ten.vercel.app/manager/assist)** (set after `vercel deploy`; see Deployment below)
 
 Multi-location staff scheduling platform for Coastal Eats restaurant group.
 
