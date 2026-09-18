@@ -30,7 +30,7 @@
 
 Open your browser and navigate to the Coastal Eats Shift Manager URL provided by your administrator.
 
-You will land on the **persona picker**: choose System Admin, East Manager, or Staff Member with one click (no credentials needed in the demo). You are redirected to the schedule view. The sidebar on the left shows the navigation menu based on your role.
+You will land on the **persona picker**: choose System Admin, East Manager, West Manager or Staff Member with one click (no credentials needed in the demo). You are redirected to the schedule view. The sidebar on the left shows the navigation menu based on your role.
 
 **Test accounts (for the assessment demo):**
 
