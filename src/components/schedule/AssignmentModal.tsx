@@ -141,7 +141,7 @@ export function AssignmentModal({ shift, onClose, onAssigned }: AssignmentModalP
         <DialogHeader>
           <DialogTitle className="text-lg">Assign Staff to Shift</DialogTitle>
         </DialogHeader>
-        <DialogContent className="p-0">
+        <div className="p-0">
           <div className="p-4 border-b bg-muted/50">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
@@ -175,7 +175,6 @@ export function AssignmentModal({ shift, onClose, onAssigned }: AssignmentModalP
                   const isOverride = results.some(r => !r.ok && r.severity === 'override');
                   const hasWarnings = results.some(r => !r.ok && r.severity === 'warn');
                   const checked = results.length > 0;
-                  const status = isBlocked ? 'block' : isOverride ? 'override' : hasWarnings ? 'warn' : 'pass';
 
                   return (
                     <div
@@ -211,6 +210,7 @@ export function AssignmentModal({ shift, onClose, onAssigned }: AssignmentModalP
                                   </span>
                                 </div>
                               ))}
+                            </div>
                           )}
                         </div>
                         <div className="flex items-center gap-2 flex-shrink-0">
@@ -247,7 +247,8 @@ export function AssignmentModal({ shift, onClose, onAssigned }: AssignmentModalP
           <DialogFooter className="border-t p-4">
             <Button variant="outline" onClick={onClose}>Cancel</Button>
           </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
