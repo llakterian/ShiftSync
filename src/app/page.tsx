@@ -22,7 +22,12 @@ export default function LoginPage() {
           </form>
           <form action={async () => { 'use server'; await loginAs('manager'); }}>
             <Button variant="outline" className="w-full justify-start h-14 text-lg hover:border-primary/50 hover:bg-accent" type="submit">
-              <Briefcase className="mr-4 h-6 w-6 text-primary" /> East Manager
+              <Briefcase className="mr-4 h-6 w-6 text-primary" /> East Manager (Downtown, Westside)
+            </Button>
+          </form>
+          <form action={async () => { 'use server'; await loginAs('west_manager'); }}>
+            <Button variant="outline" className="w-full justify-start h-14 text-lg hover:border-primary/50 hover:bg-accent" type="submit">
+              <Briefcase className="mr-4 h-6 w-6 text-blue-600" /> West Manager (Marina, Valley)
             </Button>
           </form>
           <form action={async () => { 'use server'; await loginAs('staff'); }}>

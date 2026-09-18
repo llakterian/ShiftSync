@@ -11,6 +11,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const personaMap: Record<string, { name: string, initial: string, color: string }> = {
     admin: { name: 'System Admin', initial: 'A', color: 'bg-primary text-primary-foreground' },
     manager: { name: 'East Manager', initial: 'M', color: 'bg-accent text-accent-foreground' },
+    west_manager: { name: 'West Manager', initial: 'W', color: 'bg-blue-600 text-white' },
     staff: { name: 'John Doe', initial: 'J', color: 'bg-secondary text-secondary-foreground' }
   };
 
