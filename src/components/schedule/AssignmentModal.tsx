@@ -86,7 +86,7 @@ export function AssignmentModal({ shift, onClose, onAssigned }: AssignmentModalP
     if (!shift) return;
     setLoading(true);
     try {
-      const res = await fetch(`api/assignments?shiftId=${shift.id}`);
+      const res = await fetch(`/api/assignments?shiftId=${shift.id}`);
       if (!res.ok) throw new Error('Failed to load staff');
       const data = await res.json();
       setStaff(data.staff || []);
@@ -151,7 +151,7 @@ export function AssignmentModal({ shift, onClose, onAssigned }: AssignmentModalP
               <div className="text-right">
                 <p className="font-medium">{formatDate(shift.startAt, shift.locationTz)}</p>
                 <p className="text-muted-foreground">
-                  {formatTime(shift.startAt, shift.locationTz)} – {formatTime(shift.endAt, shift.locationTz)}
+                  {formatTime(shift.startAt, shift.locationTz)} - {formatTime(shift.endAt, shift.locationTz)}
                 </p>
               </div>
               <div className="col-span-2 flex items-center gap-2 text-sm text-muted-foreground">

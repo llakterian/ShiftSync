@@ -83,7 +83,7 @@ export function WeekGrid() {
           <button onClick={goThisWeek} className="h-8 px-3 text-sm rounded-md border bg-background hover:bg-accent">Today</button>
           <button onClick={goNextWeek} className="h-8 px-3 text-sm rounded-md border bg-background hover:bg-accent" aria-label="Next week">&rarr;</button>
         </div>
-        <div className="text-sm font-medium text-foreground">Week of {format(weekStart, "MMM d")} \u2013 {format(addDays(weekStart, 6), "MMM d, yyyy")}</div>
+        <div className="text-sm font-medium text-foreground">Week of {format(weekStart, "MMM d")} – {format(addDays(weekStart, 6), "MMM d, yyyy")}</div>
       </div>
 
       <div className="grid grid-cols-7 border-b bg-muted/50 flex-shrink-0">
@@ -113,7 +113,7 @@ export function WeekGrid() {
                   {dayShifts.map((s) => (
                     <div key={s.id} className="rounded-md border bg-card p-2 text-xs shadow-sm cursor-pointer hover:bg-accent/50 transition-colors" title={`${s.locationName} \u00b7 ${s.skillName}`} onClick={() => setSelectedShift(s)}>
                       <div className="flex items-center justify-between gap-1">
-                        <span className="font-semibold text-foreground truncate">{formatInTimeZone(parseISO(s.startAt), s.locationTz, "HH:mm")}\u2013{formatInTimeZone(parseISO(s.endAt), s.locationTz, "HH:mm")}</span>
+                        <span className="font-semibold text-foreground truncate">{formatInTimeZone(parseISO(s.startAt), s.locationTz, "HH:mm")} - {formatInTimeZone(parseISO(s.endAt), s.locationTz, "HH:mm")}</span>
                         <Badge variant={s.status === "published" ? "default" : "secondary"} className="text-[10px] px-1.5 py-0">{s.status}</Badge>
                       </div>
                       <div className="mt-1 flex items-center justify-between gap-1">
