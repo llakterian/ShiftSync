@@ -3,6 +3,7 @@ import { db } from '@/lib/db/client';
 import * as schema from '@/lib/db/schema';
 import { eq, and, gte, lte } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,6 +14,12 @@ export const dynamic = 'force-dynamic';
  */
 export async function POST(req: NextRequest) {
   try {
+    /* Authorization: only managers/admins can publish */
+    const role = cookies().get('mock_role')?.value || 'staff';
+    if (role === 'staff') {
+      return NextResponse.json({ error: 'Only managers can publish schedules' }, { status: 403 });
+    }
+
     const body = await req.json();
     const { weekStart, locationId, action } = body as {
       weekStart?: string;
