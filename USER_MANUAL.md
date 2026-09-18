@@ -139,10 +139,6 @@ When a staff member requests a swap or drop, you will receive an in-app notifica
 
 > If you edit a shift that has a pending swap request attached to it, the swap is automatically cancelled and all parties are notified.
 
-### 3.6.1 Shift History
-
-Navigate to **Assignments** > **Shift History** tab to view the complete audit trail for any shift: who assigned it, when it was published, all swap/drop activity, and who approved or rejected changes.
-
 ### 3.7 Analytics Dashboard
 
 Navigate to **Analytics** in the sidebar. Three panels are displayed:
