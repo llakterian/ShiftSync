@@ -86,7 +86,7 @@ export function AssignmentModal({ shift, onClose, onAssigned }: AssignmentModalP
     if (!shift) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/assignments/check?shiftId=${shift.id}`);
+      const res = await fetch(`api/assignments?shiftId=${shift.id}`);
       if (!res.ok) throw new Error('Failed to load staff');
       const data = await res.json();
       setStaff(data.staff || []);
