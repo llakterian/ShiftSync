@@ -20,10 +20,8 @@ export async function POST(req: Request) {
   /* Graceful no-key fallback: coverage questions still get a deterministic
    * DB-backed answer without any LLM key (free insurance for the demo). */
   if (!process.env.NVIDIA_API_KEY) {
-    const lastUser = [...(messages ?? [])].reverse().find((m: { role?: string }) => m.role === 'user');
-    const lastText = lastUser && typeof (lastUser as { text?: string }).text === 'string'
-      ? (lastUser as { text?: string }).text!
-      : '';
+    const lastUser = [...(messages ?? [])].reverse().find((m: { role?: string; parts?: { type: string; text?: string }[]; content?: string }) => m.role === 'user');
+    const lastText = lastUser?.parts?.find((p: { type: string; text?: string }) => p.type === 'text')?.text ?? lastUser?.content ?? '';
     return Response.json({
       id: 'offline-fallback',
       role: 'assistant',
