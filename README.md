@@ -1,6 +1,6 @@
-# Coastal Eats Shift Manager
+# ShiftSync — Coastal Eats Shift Manager
 
-> Live demo: **[DEPLOYMENT_URL](https://shiftsync-psi-ten.vercel.app/manager/assist)** (set after `vercel deploy`; see Deployment below)
+> Live demo: **https://shiftsync-psi-ten.vercel.app/**
 
 Multi-location staff scheduling platform for Coastal Eats restaurant group.
 
@@ -30,7 +30,7 @@ The Coastal Eats Shift Manager is a web-based scheduling platform that handles w
 | ORM | Drizzle ORM |
 | UI | shadcn/ui + Tailwind CSS |
 | Real-Time | Server-Sent Events + PostgreSQL triggers |
-| Smart Assist | Vercel AI SDK + NVIDIA NIM (deepseek-ai/deepseek-v4-flash-0731) |
+|| Smart Assist | Vercel AI SDK + NVIDIA NIM (z-ai/glm-5.3-flash) |
 | Deployment | Vercel (frontend) + Supabase (database) |
 
 ### Why NVIDIA NIM and not the OpenAI API
@@ -49,7 +49,7 @@ This project was built against the **NVIDIA NIM API** (`integrate.api.nvidia.com
 
 ```bash
 git clone https://github.com/llakterian/ShiftSync.git
-cd int
+cd ShiftSync
 npm install
 ```
 
@@ -106,7 +106,7 @@ Open http://localhost:3000. You will land on the persona picker: choose System A
 | Sarah Smith | sarah@coastaleats.com | Staff (Downtown + Westside, Server) |
 | Maria Garcia | maria@coastaleats.com | Staff (Marina, Line Cook + Bartender) |
 
-(Authentication is the next phase; currently the role is set by the persona picker cookie. All three roles are one click away at `/`.)
+(Authentication is the next phase; currently the role is set by the persona picker cookie. All three roles are one click away at `/`. The seed includes 12 users total — the 7 shown above plus 5 additional staff: Mike Turner (Downtown, Host), Priya Patel (Marina, Server), Devon Lee (Downtown, Line Cook), Lucia Rossi (Valley, Host), and Sam Brooks (Downtown, Bartender).)
 
 ## Locations
 
@@ -261,7 +261,7 @@ A shift that pushes someone past 40h fires a **warning, not a block** (spec: wee
 All timestamps are `TIMESTAMPTZ`. Shift creation resolves wall-clock times to absolute UTC instants using the **location's** timezone (`fromZonedTime`), and overnight shifts roll to the next calendar day. Availability checks convert the shift to the location's canonical timezone before comparing against the staff member's window. Ana, certified Downtown (ET) and Marina (PT) with 9am to 5pm availability in each location's local time, demonstrates this in the seed data.
 
 **4. Simultaneous Assignment**
-Both managers submit at the same moment. `/api/assignments/confirm` takes `pg_advisory_xact_lock(hashtext(userId))` inside a transaction: the first request commits its assignment; the second blocks on the lock, then re-runs the engine against committed state, sees the first assignment, and returns the double-booking block with suggestions. One succeeds, one gets a clear error in real time via SSE. Application-level checks alone would race; the lock is what makes the decision atomic.
+Both managers submit at the same moment. `/api/assignments/confirm` takes `pg_advisory_xact_lock(hashtext(userId))` inside a transaction: the first request commits its assignment; the second blocks on the lock, then re-runs the engine against committed state, sees the first assignment, and returns the double-booking block with suggestions. One succeeds, one gets a clear error. Application-level checks alone would race; the lock is what makes the decision atomic.
 
 **5. The Fairness Complaint**
 Navigate to Analytics > Fairness Report. The report shows total hours, premium shift count (Friday/Saturday evenings), and a fairness score per staff member. A low score indicates under-representation; use the data to respond to the complaint.

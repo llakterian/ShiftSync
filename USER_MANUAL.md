@@ -139,6 +139,10 @@ When a staff member requests a swap or drop, you will receive an in-app notifica
 
 > If you edit a shift that has a pending swap request attached to it, the swap is automatically cancelled and all parties are notified.
 
+### 3.6.1 Shift History
+
+Navigate to **Assignments** > **Shift History** tab to view the complete audit trail for any shift: who assigned it, when it was published, all swap/drop activity, and who approved or rejected changes.
+
 ### 3.7 Analytics Dashboard
 
 Navigate to **Analytics** in the sidebar. Three panels are displayed:
@@ -288,7 +292,7 @@ All notifications are stored and can be reviewed in the notification centre. You
 ## 7. Frequently Asked Questions
 
 **Q: I set my availability as 9am to 5pm but my manager scheduled me for a 6pm shift. How?**
-A: The manager would have seen a constraint alert stating the shift falls outside your availability. If they confirmed anyway, contact your manager. The system flags it but managers can override warnings.
+A: The manager would have received a hard block — the system prevents scheduling outside your declared availability. If this happened, report it to your admin.
 
 **Q: Can I be scheduled at two different locations in the same week?**
 A: Yes, if you are certified at both locations. The system checks certifications on every assignment. It also checks that shifts at different locations do not overlap and that you have at least 10 hours of rest between them.
